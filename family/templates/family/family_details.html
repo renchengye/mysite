@@ -1,0 +1,42 @@
+{% extends "family/base.html" %}
+
+{% block title %}Family Details{% endblock %}
+
+{% block content %}
+<div class="weui-panel">
+  <div class="weui-panel__hd">家族详情</div>
+  <div class="weui-panel__bd">
+    <article class="weui-article">
+      <h1>{{family.family_name}}</h1>
+      <section>
+        <h2 class="title">百科</h2>
+        <section>
+          <h3>基本信息</h3>
+          <p>{{family.head_of_family_individual_id}}</p>
+          <p>{{family.family_description}}</p>
+          <p>
+            <img src="{{ MEDIA_URL }}{{ family.image_path }}" alt="">
+          </p>
+        </section>
+        <section>
+          <h3>家族介绍</h3>
+          <p>{{family.other_family_details}}</p>
+        </section>
+      </section>
+      <section>
+        <h2 class="title">主要成员</h2>
+        <section>
+          <h3>成员1</h3>
+          <p>家族创始人</p>
+          <p>
+            <img src="" alt="">
+          </p>
+        </section>
+      </section>
+      <section>
+        <a href="{% url 'family:member_list' family.id %}" class="weui-btn weui-btn_block weui-btn_primary">全部家族成员</a>
+      </section>
+    </article>
+  </div>
+</div>
+{% endblock %}

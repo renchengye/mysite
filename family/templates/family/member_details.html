@@ -1,0 +1,41 @@
+{% extends "family/base.html" %}
+
+{% block title %}Members{% endblock %}
+
+{% block content %}
+<div class="weui-panel">
+  <div class="weui-panel__hd">成员详情</div>
+  <div class="weui-panel__bd">
+    <article class="weui-article">
+      <h1>{{member.first_name}}{{member.last_name}}</h1>
+      <section>
+        <h2 class="title">个人</h2>
+        <section>
+          <h3>基本信息</h3>
+          <p>{{member.date_of_birth}}{{member.place_of_birth}}</p>
+          <p>
+            <img src="{{ MEDIA_URL }}{{ member.image_path }}" alt="">
+          </p>
+        </section>
+        <section>
+          <h3>主要事迹</h3>
+          <p>{{member.other_individual_details}}</p>
+        </section>
+      </section>
+      <section>
+        <h2 class="title">家族</h2>
+        <section>
+          <h3>家族1</h3>
+          <p>xx家族创始人</p>
+          <p>
+            <img src="" alt="">
+          </p>
+        </section>
+      </section>
+      <section>
+        <input class="weui-btn weui-btn_block weui-btn_primary" type="button" value="加入新家族">
+      </section>
+    </article>
+  </div>
+</div>
+{% endblock %}

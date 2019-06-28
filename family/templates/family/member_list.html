@@ -1,0 +1,27 @@
+{% extends "family/base.html" %}
+
+{% block title %}Members{% endblock %}
+
+{% block content %}
+<div class="weui-panel">
+  <div class="weui-panel__hd">{{family.family_name}}</div>
+  <div class="weui-panel__bd">
+    <div class="weui-media-box weui-media-box_small-appmsg">
+      <div class="weui-cells">
+        {% for member in members %}
+        <a class="weui-cell weui-cell_access weui-cell_example" href="{% url 'family:member' member.id %}">
+          <div class="weui-cell__hd"><img src="{{ MEDIA_URL }}{{ member.image_path }}" alt="" style="width:20px;margin-right:16px;display:block"></div>
+          <div class="weui-cell__bd weui-cell_primary">
+            <p>{{member.first_name}}{{member.last_name}}</p>
+          </div>
+          <span class="weui-cell__ft"></span>
+        </a>
+        {% endfor %}
+        <div class="weui-loadmore weui-loadmore_line">
+            <span class="weui-loadmore__tips">暂无数据</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

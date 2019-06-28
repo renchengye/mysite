@@ -1,0 +1,13 @@
+{% extends "family/base.html" %}
+
+{% block title %}Relations{% endblock %}
+
+{% block content %}
+<div class="container">
+  <ul>
+  {% for relation in relations %}
+    <li>{{relation.individual_1_role_code}}:{{relation.individual_1_id}}, {{relation.individual_2_role_code}}:{{relation.individual_2_id}}</li>
+  {% endfor %}
+  </ul>
+</div>
+{% endblock %}
