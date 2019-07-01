@@ -1,0 +1,131 @@
+{% extends "family/base.html" %}
+
+{% block title %}Create Members{% endblock %}
+
+{% block content %}
+
+<div class="weui-panel">
+  <div class="weui-panel__bd">        
+    <form  action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="weui-cells__title">编辑成员信息</div>
+      <div class="weui-cells weui-cells_form">        
+        <div class="weui-cell {% if form.first_name.errors %}weui-cell_warn{% endif %}">      
+          <div class="weui-cell__hd"><label class="weui-label">姓氏</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入姓氏" name="first_name" value="{{form.first_name.value|default:''}}">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+        {% if form.last_name.errors %}
+        <div class="weui-cell weui-cell_warn">
+        {% else %}
+        <div class="weui-cell">
+        {% endif %}
+          <div class="weui-cell__hd"><label class="weui-label">名字</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入名字" name="last_name" value="{{form.last_name.value|default:''}}">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+        <div class="weui-cell weui-cell_select weui-cell_select-after">
+          <div class="weui-cell__hd">
+            <label for="" class="weui-label">性别</label>
+          </div>
+          <div class="weui-cell__bd">
+            <select class="weui-select" name="gender">
+              <option value="M">男</option>
+              <option value="F" {% if form.gender.value == "F" %}selected{% endif %}>女</option>
+            </select>
+          </div>
+        </div>
+        {% if form.place_of_birth.errors %}
+        <div class="weui-cell weui-cell_warn">
+        {% else %}
+        <div class="weui-cell">
+        {% endif %}
+          <div class="weui-cell__hd"><label class="weui-label">籍贯</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入籍贯" name="place_of_birth" value="{{form.place_of_birth.value|default:''}}">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+        {% if form.date_of_birth.errors %}
+        <div class="weui-cell weui-cell_warn">
+        {% else %}
+        <div class="weui-cell">
+        {% endif %}
+          <div class="weui-cell__hd"><label for="" class="weui-label">出生日期</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="date" value="{{form.date_of_birth.value|date:'Y-m-d'}}" name="date_of_birth">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>      
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <textarea class="weui-textarea" placeholder="请输入简介" rows="3" name="other_individual_details">{{form.other_individual_details.value|default:''}}</textarea>
+            <div class="weui-textarea-counter"><span>0</span>/200</div>
+          </div>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <div class="weui-uploader">
+              <div class="weui-uploader__hd">
+                <p class="weui-uploader__title">请上传人物头像</p>
+                <div class="weui-uploader__info"></div>
+              </div>
+              <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files" id="uploaderFiles">
+                  {% if form.image_path.value %}
+                  <li class="weui-uploader__file" style="background-image:url({{ MEDIA_URL }}{{ form.image_path.value }})"></li>
+                  {% endif %}
+                </ul>
+                <div class="weui-uploader__input-box">
+                  <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" name="image_path">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__tips">{{ form.non_field_errors }}</div>
+      <div class="weui-btn-area">
+        <input class="weui-btn weui-btn_block weui-btn_primary" type="submit" value="保存">
+      </div>      
+    </form>    
+  </div>
+</div>
+
+<!-- <form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_table }}
+  <input type="submit" value="Create the Member">
+</form> -->
+
+<script type="text/javascript">
+  var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
+    $uploaderInput = document.querySelector("#uploaderInput"),
+    $uploaderFiles = document.querySelector("#uploaderFiles");
+
+  $uploaderInput.onchange = function(e){
+    var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+    for (var i = 0, len = files.length; i < len; ++i) {
+      var file = files[i];
+      if (url) {
+          src = url.createObjectURL(file);
+      } else {
+          src = e.target.result;
+      }
+      $uploaderFiles.innerHTML = tmpl.replace('#url#', src);
+    }
+  };
+</script>
+{% endblock %}

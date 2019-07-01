@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, get_object_or_404
-
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseRedirect
 # Create your views here.
 from .models import Individual, Family, Relationship
 from .forms import MemberForm
@@ -37,13 +37,24 @@ def MemberDetails(request, member_id):
 
 def CreateMember(request):
     if request.method == 'POST':
-        form = MemberForm(request.POST)
+        form = MemberForm(request.POST, request.FILES)
         if form.is_valid():
             new_member = form.save()
-            return HttpResponseRedirect('/thanks/')
+            return redirect('family:member', member_id=new_member.id)
     else:
         form = MemberForm()
-    return render(request, 'family/create_member.html', {'form': form})
+    return render(request, 'family/edit_member.html', {'form': form})
+
+def ModifyMember(request, member_id):
+    instance = Individual.objects.get(pk=member_id)
+    if request.method == 'POST':
+        form = MemberForm(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('family:member', member_id=member_id)
+    else:
+        form = MemberForm(instance=instance)
+    return render(request, 'family/edit_member.html', {'form': form})
 
 # def JoinInFamily(request):
 

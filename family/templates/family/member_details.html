@@ -33,7 +33,8 @@
         </section>
       </section>
       <section>
-        <input class="weui-btn weui-btn_block weui-btn_primary" type="button" value="加入新家族">
+        <a href="" class="weui-btn weui-btn_block weui-btn_primary">加入新家族</a>
+        <a href="{% url 'family:modify_member' member.id %}" class="weui-btn weui-btn_block weui-btn_primary">修改</a>
       </section>
     </article>
   </div>

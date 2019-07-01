@@ -9,7 +9,7 @@
   <!-- <link rel="stylesheet" href="{% static 'family/css/style.css' %}"> -->
   <style type="text/css">
     header {
-      padding: 10px 20px;
+      padding: 20px 20px 10px;
       -webkit-box-align: center;
       -webkit-align-items: center;
       align-items: center;
@@ -40,13 +40,14 @@
 <body>  
   <header class="weui-flex">
     <a href="/family" class="weui-flex__item"><i class="logo"></i></a>
+    {% if user.is_authenticated %}
+    <a href="/accounts/logout" class="weui-btn weui-btn_mini weui-btn_plain-primary">Hello, {{ user.username }}.</a>
+    
+    {% else %}
     <a href="/accounts/login" class="weui-btn weui-btn_mini weui-btn_plain-primary">登录或注册</a>
+    {% endif %}
   </header>
-  <div>
   {% block content %}{% endblock %}
-  </div>  
-  <footer>
   {% block footer %}{% endblock %}
-  </footer>
 </body>
 </html>

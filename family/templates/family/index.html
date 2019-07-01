@@ -4,70 +4,77 @@
 {% block title %}首页{% endblock %}
 
 {% block content %}
-<div class="weui-grids">
-  <a href="{% url 'family:family_list' %}" class="weui-grid">
-    <div class="weui-grid__icon">
-      <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
+<div class="weui-panel">
+  <div class="weui-panel__hd">常用功能</div>
+  <div class="weui-panel__bd">
+    <div class="weui-grids">
+      <a href="{% url 'family:family_list' %}" class="weui-grid">
+        <div class="weui-grid__icon">
+          <img src="{% static 'family/images/icon_family.png' %}" alt="">
+        </div>
+        <p class="weui-grid__label">家族列表</p>
+      </a>
+      <a href="{% url 'family:create_member' %}" class="weui-grid">
+        <div class="weui-grid__icon">
+          <img src="{% static 'family/images/icon_add_member.png' %}" alt="">
+        </div>
+        <p class="weui-grid__label">创建成员</p>
+      </a>
+      <a href="javascript:;" class="weui-grid">
+        <div class="weui-grid__icon">
+          <img src="{% static 'family/images/icon_members.png' %}" alt="">
+        </div>
+        <p class="weui-grid__label">其他成员</p>
+      </a>
+      <a href="javascript:;" class="weui-grid">
+        <div class="weui-grid__icon">
+          <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
+        </div>
+        <p class="weui-grid__label">Grid</p>
+      </a>
+      <a href="javascript:;" class="weui-grid">
+        <div class="weui-grid__icon">
+          <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
+        </div>
+        <p class="weui-grid__label">Grid</p>
+      </a>
+      <a href="javascript:;" class="weui-grid">
+        <div class="weui-grid__icon">
+          <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
+        </div>
+        <p class="weui-grid__label">Grid</p>
+      </a>
+      <a href="javascript:;" class="weui-grid">
+        <div class="weui-grid__icon">
+          <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
+        </div>
+        <p class="weui-grid__label">Grid</p>
+      </a>
+      <a href="javascript:;" class="weui-grid">
+        <div class="weui-grid__icon">
+          <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
+        </div>
+        <p class="weui-grid__label">Grid</p>
+      </a>
+      <a href="javascript:;" class="weui-grid">
+        <div class="weui-grid__icon">
+          <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
+        </div>
+        <p class="weui-grid__label">Grid</p>
+      </a>
     </div>
-    <p class="weui-grid__label">家族列表</p>
-  </a>
-  <a href="{% url 'family:create_member' %}" class="weui-grid">
-    <div class="weui-grid__icon">
-      <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
-    </div>
-    <p class="weui-grid__label">新成员</p>
-  </a>
-  <a href="javascript:;" class="weui-grid">
-    <div class="weui-grid__icon">
-      <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
-    </div>
-    <p class="weui-grid__label">Grid</p>
-  </a>
-  <a href="javascript:;" class="weui-grid">
-    <div class="weui-grid__icon">
-      <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
-    </div>
-    <p class="weui-grid__label">Grid</p>
-  </a>
-  <a href="javascript:;" class="weui-grid">
-    <div class="weui-grid__icon">
-      <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
-    </div>
-    <p class="weui-grid__label">Grid</p>
-  </a>
-  <a href="javascript:;" class="weui-grid">
-    <div class="weui-grid__icon">
-      <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
-    </div>
-    <p class="weui-grid__label">Grid</p>
-  </a>
-  <a href="javascript:;" class="weui-grid">
-    <div class="weui-grid__icon">
-      <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
-    </div>
-    <p class="weui-grid__label">Grid</p>
-  </a>
-  <a href="javascript:;" class="weui-grid">
-    <div class="weui-grid__icon">
-      <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
-    </div>
-    <p class="weui-grid__label">Grid</p>
-  </a>
-  <a href="javascript:;" class="weui-grid">
-    <div class="weui-grid__icon">
-      <img src="{% static 'family/images/icon_tabbar.png' %}" alt="">
-    </div>
-    <p class="weui-grid__label">Grid</p>
-  </a>
+  </div>
 </div>
 {% endblock %}
 
 {% block footer %}
-<div class="weui-footer">
-  <p class="weui-footer__links">
-    <a href="javascript:void(0);" class="weui-footer__link">底部链接</a>
-    <a href="javascript:void(0);" class="weui-footer__link">底部链接</a>
-  </p>
-  <p class="weui-footer__text">Copyright © 2015-2019 yerencheng</p>
-</div>
+<footer>
+  <div class="weui-footer">
+    <p class="weui-footer__links">
+      <a href="javascript:void(0);" class="weui-footer__link">底部链接</a>
+      <a href="javascript:void(0);" class="weui-footer__link">底部链接</a>
+    </p>
+    <p class="weui-footer__text">Copyright © 2015-2019 yerencheng</p>
+  </div>
+</footer>
 {% endblock %}
