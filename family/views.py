@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
 # Create your views here.
 from .models import Individual, Family, Relationship
 from .forms import MemberForm
@@ -35,6 +34,7 @@ def MemberDetails(request, member_id):
     member = Individual.objects.get(pk=member_id)
     return render(request, 'family/member_details.html', {'member': member})
 
+@login_required
 def CreateMember(request):
     if request.method == 'POST':
         form = MemberForm(request.POST, request.FILES)
@@ -45,6 +45,7 @@ def CreateMember(request):
         form = MemberForm()
     return render(request, 'family/edit_member.html', {'form': form})
 
+@login_required
 def ModifyMember(request, member_id):
     instance = Individual.objects.get(pk=member_id)
     if request.method == 'POST':
