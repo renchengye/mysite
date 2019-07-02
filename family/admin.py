@@ -7,7 +7,7 @@ from django.contrib import admin
 from .models import Individual, Family, Relationship_Type, Role, Relationship
 
 class IndividualAdmin(admin.ModelAdmin):
-    list_display = ('id', 'first_name', 'last_name', 'gender', 'date_of_birth', 'place_of_birth','other_individual_details',)
+    list_display = ('id', 'first_name', 'last_name', 'gender', 'date_of_birth', 'place_of_birth','other_individual_details')
     ordering = ('date_of_birth',)
     search_fields = ['last_name']
 

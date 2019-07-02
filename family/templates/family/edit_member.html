@@ -1,9 +1,8 @@
 {% extends "family/base.html" %}
 
-{% block title %}Create Members{% endblock %}
+{% block title %}编辑成员信息{% endblock %}
 
 {% block content %}
-
 <div class="weui-panel">
   <div class="weui-panel__bd">        
     <form  action="" method="post" enctype="multipart/form-data">
@@ -19,11 +18,7 @@
             <i class="weui-icon-warn"></i>
           </div>
         </div>
-        {% if form.last_name.errors %}
-        <div class="weui-cell weui-cell_warn">
-        {% else %}
-        <div class="weui-cell">
-        {% endif %}
+        <div class="weui-cell {% if form.last_name.errors %}weui-cell_warn{% endif %}">
           <div class="weui-cell__hd"><label class="weui-label">名字</label></div>
           <div class="weui-cell__bd">
             <input class="weui-input" type="text" placeholder="请输入名字" name="last_name" value="{{form.last_name.value|default:''}}">
@@ -43,11 +38,7 @@
             </select>
           </div>
         </div>
-        {% if form.place_of_birth.errors %}
-        <div class="weui-cell weui-cell_warn">
-        {% else %}
-        <div class="weui-cell">
-        {% endif %}
+        <div class="weui-cell {% if form.place_of_birth.errors %}weui-cell_warn{% endif %}">
           <div class="weui-cell__hd"><label class="weui-label">籍贯</label></div>
           <div class="weui-cell__bd">
             <input class="weui-input" type="text" placeholder="请输入籍贯" name="place_of_birth" value="{{form.place_of_birth.value|default:''}}">
@@ -56,11 +47,7 @@
             <i class="weui-icon-warn"></i>
           </div>
         </div>
-        {% if form.date_of_birth.errors %}
-        <div class="weui-cell weui-cell_warn">
-        {% else %}
-        <div class="weui-cell">
-        {% endif %}
+        <div class="weui-cell {% if form.date_of_birth.errors %}weui-cell_warn{% endif %}">
           <div class="weui-cell__hd"><label for="" class="weui-label">出生日期</label></div>
           <div class="weui-cell__bd">
             <input class="weui-input" type="date" value="{{form.date_of_birth.value|date:'Y-m-d'}}" name="date_of_birth">

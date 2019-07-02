@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
   <title>{% block title %}{% endblock %}</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/weui.css' %}">
@@ -41,10 +41,11 @@
   <header class="weui-flex">
     <a href="/family" class="weui-flex__item"><i class="logo"></i></a>
     {% if user.is_authenticated %}
-    <a href="/accounts/logout" class="weui-btn weui-btn_mini weui-btn_plain-primary">Hello, {{ user.username }}.</a>
-    
+    <a href="/accounts/logout" class="weui-btn weui-btn_mini weui-btn_plain-primary">退出登录</a>    
     {% else %}
-    <a href="/accounts/login" class="weui-btn weui-btn_mini weui-btn_plain-primary">登录或注册</a>
+    <a href="/accounts/login" class="weui-btn weui-btn_mini weui-btn_plain-primary">登录</a>
+    <span> </span>
+    <a href="/accounts/register" class="weui-btn weui-btn_mini weui-btn_plain-primary">注册</a>
     {% endif %}
   </header>
   {% block content %}{% endblock %}

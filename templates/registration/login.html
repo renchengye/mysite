@@ -1,14 +1,45 @@
-{% if form.errors %}
-    <p class="error">Sorry, that's not a valid username or password</p>
-  {% endif %}
+{% extends "registration/base.html" %}
 
-  <form action="" method="post">
-  {% csrf_token %}
-    <label for="username">User name:</label>
-    <input type="text" name="username" value="" id="username">
-    <label for="password">Password:</label>
-    <input type="password" name="password" value="" id="password">
+{% block title %}用户登录{% endblock %}
 
-    <input type="submit" value="login" />
-    <input type="hidden" name="next" value="{{ next|escape }}" />
-  </form>
+{% block content %}
+<div class="weui-panel">
+  <div class="weui-panel__bd">        
+    <form  action="" method="post">
+      {% csrf_token %}
+      <div class="weui-cells__title">用户登录</div>
+      <div class="weui-cells weui-cells_form">        
+        <div class="weui-cell {% if form.username.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入用户名" name="username">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+        <div class="weui-cell {% if form.password.errors %}weui-cell_warn{% endif %}">      
+          <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="password" placeholder="请输入密码" name="password">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__tips">{{ form.non_field_errors }}</div>
+      <label for="weuiAgree" class="weui-agree">
+        <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
+        <span class="weui-agree__text">
+          阅读并同意<a href="javascript:void(0);">《相关条款》</a>
+        </span>
+      </label>
+      <div class="weui-btn-area">
+        <input class="weui-btn weui-btn_block weui-btn_primary" type="submit" value="登录">
+        <input type="hidden" name="next" value="{{ next|escape }}" />
+      </div>      
+    </form>    
+  </div>
+</div>
+{% endblock %}

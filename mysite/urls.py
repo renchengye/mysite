@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^polls/', include('polls.urls')),
     url(r'^accounts/login/$',  login),
     url(r'^accounts/logout/$', logout),
-    # url(r'^accounts/profile/$', ),
+    url(r'^accounts/profile/$', views.profile),
+    url(r'^accounts/register/$', views.register),
     url(r'^family/', include('family.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

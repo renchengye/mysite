@@ -1,0 +1,58 @@
+{% extends "registration/base.html" %}
+
+{% block title %}用户信息{% endblock %}
+
+{% block content %}
+<div class="weui-panel">
+  <div class="weui-panel__bd">        
+    <form  action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="weui-cells__title">用户信息</div>
+      <div class="weui-cells weui-cells_form">
+        <div class="weui-cell {% if form.username.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入用户名" name="username" value="{{form.username.value|default:''}}">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>        
+        <div class="weui-cell {% if form.first_name.errors %}weui-cell_warn{% endif %}">      
+          <div class="weui-cell__hd"><label class="weui-label">姓氏</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入姓氏" name="first_name" value="{{form.first_name.value|default:''}}">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+        <div class="weui-cell {% if form.last_name.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd"><label class="weui-label">名字</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入名字" name="last_name" value="{{form.last_name.value|default:''}}">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+        <div class="weui-cell {% if form.email.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd"><label class="weui-label">邮箱</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="email" placeholder="请输入邮箱" name="email" value="{{form.email.value|default:''}}">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="weui-cells__tips">{{ form.non_field_errors }}</div>
+      <div class="weui-btn-area">
+        <input class="weui-btn weui-btn_block weui-btn_primary" type="submit" value="保存">
+      </div>      
+    </form>    
+  </div>
+</div>
+{% endblock %}

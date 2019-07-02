@@ -20,7 +20,7 @@
         </div>
         <p class="weui-grid__label">创建成员</p>
       </a>
-      <a href="javascript:;" class="weui-grid">
+      <a href="{% url 'family:my_member' %}" class="weui-grid">
         <div class="weui-grid__icon">
           <img src="{% static 'family/images/icon_members.png' %}" alt="">
         </div>
@@ -71,10 +71,10 @@
 <footer>
   <div class="weui-footer">
     <p class="weui-footer__links">
-      <a href="javascript:void(0);" class="weui-footer__link">底部链接</a>
+      <a href="/accounts/profile" class="weui-footer__link">底部链接</a>
       <a href="javascript:void(0);" class="weui-footer__link">底部链接</a>
     </p>
-    <p class="weui-footer__text">Copyright © 2015-2019 yerencheng</p>
+    <p class="weui-footer__text">Copyright © 2018-2023 {{ user }}</p>
   </div>
 </footer>
 {% endblock %}

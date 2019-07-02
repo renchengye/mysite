@@ -1,0 +1,55 @@
+{% extends "registration/base.html" %}
+
+{% block title %}用户注册{% endblock %}
+
+{% block content %}
+<div class="weui-panel">
+  <div class="weui-panel__bd">        
+    <form  action="" method="post">
+      {% csrf_token %}
+      <div class="weui-cells__title">用户注册</div>
+      <div class="weui-cells weui-cells_form">        
+        <div class="weui-cell {% if form.username.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入用户名" name="username">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+        <div class="weui-cell {% if form.password1.errors %}weui-cell_warn{% endif %}">      
+          <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="password" placeholder="请输入密码" name="password1">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+        <div class="weui-cell {% if form.password2.errors %}weui-cell_warn{% endif %}">      
+          <div class="weui-cell__hd"><label class="weui-label">密码确认</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="password" placeholder="请再次输入密码" name="password2">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__tips">{{ form.username.help_text|safe }}</div>
+      <div class="weui-cells__tips">{{ form.password1.help_text|safe }}</div>
+      <div class="weui-cells__tips">{{ form.password2.help_text|safe }}</div>
+      <div class="weui-cells__tips">{{ form.non_field_errors }}</div>
+      <div class="weui-btn-area">
+        <input class="weui-btn weui-btn_block weui-btn_primary" type="submit" value="创建">
+      </div>      
+    </form>    
+  </div>
+</div>
+
+<!-- <form action="" method="post">
+  {{ form }}
+  <input type="submit" value="Create the account">
+</form> -->
+{% endblock %}

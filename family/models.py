@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
-
-# Create your models here.
+from django.contrib.auth.models import User
 
 def individual_directory_path(instance, filename):
-    return 'individual_{0}/{1}'.format(instance.id, filename)
+    return 'individual_{0}/{1}'.format(instance.date_of_birth, filename)
 
 class Individual(models.Model):
     GENDER = [
@@ -20,6 +18,9 @@ class Individual(models.Model):
     place_of_birth = models.CharField(max_length=50)
     other_individual_details = models.TextField(null=True, blank=True)
     image_path = models.FileField(upload_to=individual_directory_path, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return u'%s %s' % (self.first_name, self.last_name)
@@ -28,7 +29,7 @@ class Individual(models.Model):
         ordering = ['date_of_birth']
 
 def family_directory_path(instance, filename):
-    return 'family_{0}/{1}'.format(instance.id, filename)
+    return 'family_{0}/{1}'.format(instance.user.id, filename)
 
 class Family(models.Model):
     head_of_family_individual_id = models.ForeignKey(Individual, on_delete=models.CASCADE)
