@@ -11,7 +11,7 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             new_user = form.save()
-            return redirect("/accounts/login")
+            return redirect('/accounts/login')
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {
@@ -20,7 +20,7 @@ def register(request):
 
 @login_required
 def profile(request):
-    UserForm = modelform_factory(User, fields='__all__')
+    UserForm = modelform_factory(User, fields=('username', 'first_name', 'last_name', 'email'))
     if request.method == 'POST':
         form = UserForm(request.POST, instance=request.user)
         if form.is_valid():

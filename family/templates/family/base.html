@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, shrink-to-fit=no">
   <title>{% block title %}{% endblock %}</title>
   {% load static %}
-  <link rel="stylesheet" href="{% static 'css/weui.css' %}">
+  <link rel="stylesheet" href="{% static 'libs/css/weui.css' %}">
   <!-- <link rel="stylesheet" href="{% static 'family/css/style.css' %}"> -->
   <style type="text/css">
     header {
@@ -24,31 +24,20 @@
       background-image: url({% static 'family/images/Familytree.png' %});
       background-size: 100%;
     }
-    footer {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding-top: 40px;
-      padding-bottom: 10px;
-      padding-bottom: calc(10px + constant(safe-area-inset-bottom));
-      padding-bottom: calc(10px + env(safe-area-inset-bottom));
-      text-align: center;   
-    }
   </style>
+  {% block style %}{% endblock %}
 </head>
 <body>  
   <header class="weui-flex">
     <a href="/family" class="weui-flex__item"><i class="logo"></i></a>
     {% if user.is_authenticated %}
-    <a href="/accounts/logout" class="weui-btn weui-btn_mini weui-btn_plain-primary">退出登录</a>    
+    <a href="/accounts/profile" class="weui-btn weui-btn_mini weui-btn_plain-primary">{{user.username}}</a>    
     {% else %}
     <a href="/accounts/login" class="weui-btn weui-btn_mini weui-btn_plain-primary">登录</a>
-    <span> </span>
-    <a href="/accounts/register" class="weui-btn weui-btn_mini weui-btn_plain-primary">注册</a>
     {% endif %}
   </header>
   {% block content %}{% endblock %}
   {% block footer %}{% endblock %}
+  {% block script %}{% endblock %}
 </body>
 </html>

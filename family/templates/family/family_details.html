@@ -24,7 +24,12 @@
         </section>
       </section>
       <section>
-        <h2 class="title">主要成员</h2>
+        <h2 class="title">
+          <a href="{% url 'family:member_list' family.id %}">
+          <span>家族成员</span>          
+          <i class="weui-icon-info-circle"></i>
+          </a>
+        </h2>
         <section>
           <h3>成员1</h3>
           <p>家族创始人</p>
@@ -34,7 +39,7 @@
         </section>
       </section>
       <section>
-        <a href="{% url 'family:member_list' family.id %}" class="weui-btn weui-btn_block weui-btn_primary">全部家族成员</a>
+        <a href="" class="weui-btn weui-btn_block weui-btn_primary">修改家族信息</a>
       </section>
     </article>
   </div>

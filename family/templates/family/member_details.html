@@ -9,7 +9,7 @@
     <article class="weui-article">
       <h1>{{member.first_name}}{{member.last_name}}</h1>
       <section>
-        <h2 class="title">个人</h2>
+        <h2 class="title">个人事迹</h2>
         <section>
           <h3>基本信息</h3>
           <p>{{member.date_of_birth}}{{member.place_of_birth}}</p>
@@ -23,7 +23,12 @@
         </section>
       </section>
       <section>
-        <h2 class="title">家族</h2>
+        <h2 class="title">
+          <a href="">
+          <span>家族关系</span>          
+          <i class="weui-icon-info-circle"></i>
+          </a>
+        </h2>
         <section>
           <h3>家族1</h3>
           <p>xx家族创始人</p>
@@ -34,8 +39,7 @@
       </section>
       <section>
         {% if member.created_by == user %}
-        <a href="" class="weui-btn weui-btn_block weui-btn_primary">加入新家族</a>
-        <a href="{% url 'family:modify_member' member.id %}" class="weui-btn weui-btn_block weui-btn_primary">修改</a>
+        <a href="{% url 'family:modify_member' member.id %}" class="weui-btn weui-btn_block weui-btn_primary">修改成员信息</a>
         {% endif %}
       </section>
     </article>

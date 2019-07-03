@@ -45,14 +45,23 @@
             <i class="weui-icon-warn"></i>
           </div>
         </div>
-
-
       </div>
       <div class="weui-cells__tips">{{ form.non_field_errors }}</div>
       <div class="weui-btn-area">
-        <input class="weui-btn weui-btn_block weui-btn_primary" type="submit" value="保存">
+        <input class="weui-btn weui-btn_block weui-btn_primary" type="submit" value="修改">
       </div>      
     </form>    
   </div>
 </div>
+{% endblock %}
+
+{% block footer %}
+<footer>
+  <div class="weui-footer">
+    <p class="weui-footer__links">
+      <a href="/accounts/logout" class="weui-footer__link">退出登录</a>
+      <a href="/family" class="weui-footer__link">返回首页</a>
+    </p>
+  </div>
+</footer>
 {% endblock %}
