@@ -22,11 +22,14 @@ class Individual(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __unicode__(self):
-        return u'%s %s' % (self.first_name, self.last_name)
-
     class Meta:
         ordering = ['date_of_birth']
+
+    def natural_key(self):
+        return { 'last_name': self.last_name , 'image_path': u'%s' %(self.image_path) }
+
+    def __unicode__(self):
+        return u'%s %s' % (self.first_name, self.last_name)
 
 def family_directory_path(instance, filename):
     return 'family_{0}/{1}'.format(instance.user.id, filename)

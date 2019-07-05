@@ -45,30 +45,30 @@ def MyMemberList(request):
     members = Individual.objects.filter(created_by=request.user)
     return render(request, 'family/member_list.html', {'members': members})
 
+def FamilyMemberList(request, family_id):
+    head_member = Individual.objects.filter(family__id=family_id)
+    other_members = Individual.objects.filter(individual_1__family_id=family_id)
+    members = head_member | other_members
+    return render(request, 'family/member_list.html', {'members': members})
+
 # @login_required
 # def CreateFamily(request):
 
 # def JoinInFamily(request):
 
 def FamilyList(request):
-    families = Family.objects.all()
+    families = Family.objects.all()[:5]
     return render(request, 'family/family_list.html', {'families': families})
 
 def FamilyDetails(request, family_id):
     family = Family.objects.get(pk=family_id)
     return render(request, 'family/family_details.html', {'family': family})
 
-def FamilyMemberList(request, family_id):
-    family = Family.objects.get(pk=family_id)
-    individual_1 = Individual.objects.filter(individual_1__family_id=family_id)
-    individual_2 = Individual.objects.filter(individual_2__family_id=family_id)
-    members = (individual_1 | individual_2).distinct()
-    return render(request, 'family/member_list.html', {'members': members, 'family': family})
-
 def FamilyRelationship(request, family_id):
     relations = Relationship.objects.filter(family_id=family_id)
     return render(request, 'family/relation.html', {'relations': relations})
 
-def Genealogy(request):
-    json = serializers.serialize("json", Relationship.objects.all())
+def Genealogy(request, family_id):
+    relations = Relationship.objects.filter(family_id=family_id)
+    json = serializers.serialize("json", relations, use_natural_foreign_keys=True)
     return HttpResponse(json, content_type='application/json')
