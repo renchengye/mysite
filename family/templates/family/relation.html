@@ -1,13 +1,103 @@
 {% extends "family/base.html" %}
+{% load static %}
 
-{% block title %}家族图谱{% endblock %}
+{% block title %}Genealogy{% endblock %}
+
+{% block style %}
+<style>
+  html, body {
+    width: 100%;
+    height: 100%;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  .wrap {
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container">
-  <ul>
-  {% for relation in relations %}
-    <li>{{relation.individual_1_role_code}}:{{relation.individual_1_id}}, {{relation.individual_2_role_code}}:{{relation.individual_2_id}}</li>
-  {% endfor %}
-  </ul>
+<div class="wrap">
+  <div id="myDiagramDiv" style="width:100%; height:100%; background-color: #DAE4E4;"></div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'libs/js/go-debug.js' %}"></script>
+
+<script>
+
+  var $ = go.GraphObject.make;
+  
+  var myDiagram = $(go.Diagram,
+    "myDiagramDiv",
+    {
+      initialAutoScale: go.Diagram.Uniform,
+      "undoManager.isEnabled": true,
+      layout: $(
+        go.TreeLayout,
+        {
+          angle: 0,
+          layerSpacing: 20
+        }
+      )
+    }
+  );
+
+  myDiagram.nodeTemplate = $(go.Node,
+    "Vertical",
+    { background: "#44CCFF" },
+    $(go.Picture,
+      { margin: 6, width: 64, height: 64, background: "red" },
+      new go.Binding("source")
+    ),
+    $(go.TextBlock,
+      "Default Text",
+      { margin: 6, width: 64, stroke: "white", font: "bold 16px sans-serif", wrap: go.TextBlock.None },
+      new go.Binding("text", "name")
+    ),
+    // $("TreeExpanderButton")
+  );
+
+  myDiagram.linkTemplate = $(go.Link,
+    { routing: go.Link.Orthogonal, corner: 5 },
+    $(go.Shape,
+      { strokeWidth: 3, stroke: "#555" }
+    )
+  );
+
+  var model = $(go.TreeModel);
+  
+  window.onload = function() {
+    arr = [
+      { key: "1",              name: "Don Meow",   source: "cat1.png" },
+      { key: "2", parent: "1", name: "Demeter",    source: "cat2.png" },
+      { key: "4", parent: "1", name: "Copricat",   source: "cat3.png" },
+      { key: "8", parent: "5", name: "Jellylorum", source: "cat4.png" },
+      { key: "5", parent: "3", name: "Alonzo",     source: "cat5.png" },
+      { key: "6", parent: "2", name: "Munkustrap", source: "cat6.png" }
+    ];
+    fetch('/family/genealogy/').then(response => response.json()).then((json)=>{
+      console.log(json)
+      for (var i=0; i<json.length; i++) {
+        var obj = {};
+        obj.key = json[i].fields.individual_2_id.toString()
+        obj.parent = json[i].fields.individual_1_id.toString()
+        obj.name = "xxx"
+        obj.source = "cat7.png"
+        arr.push(obj)
+      }
+      console.log(arr)
+      model.nodeDataArray = arr
+      myDiagram.model = model;
+    })            
+}
+
+</script>
 {% endblock %}

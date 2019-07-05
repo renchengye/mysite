@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core import serializers
+from django.http import HttpResponse
 # Create your views here.
 from .models import Individual, Family, Relationship
 from .forms import MemberForm
@@ -46,7 +48,6 @@ def MyMemberList(request):
 # @login_required
 # def CreateFamily(request):
 
-
 # def JoinInFamily(request):
 
 def FamilyList(request):
@@ -67,3 +68,7 @@ def FamilyMemberList(request, family_id):
 def FamilyRelationship(request, family_id):
     relations = Relationship.objects.filter(family_id=family_id)
     return render(request, 'family/relation.html', {'relations': relations})
+
+def Genealogy(request):
+    json = serializers.serialize("json", Relationship.objects.all())
+    return HttpResponse(json, content_type='application/json')
