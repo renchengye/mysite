@@ -83,3 +83,6 @@ class Relationship(models.Model):
     date_relationship_ended = models.DateField(null=True, blank=True)
     relationship_place = models.CharField(max_length=50, null=True, blank=True)
     other_relationship_details = models.TextField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['date_relationship_started']

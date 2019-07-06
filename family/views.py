@@ -19,7 +19,7 @@ def CreateMember(request):
             new_member = form.save(commit=False)
             new_member.created_by = request.user
             new_member.save()
-            return redirect('family:member', member_id=new_member.id)
+            return redirect('family:index')
     else:
         form = MemberForm()
     return render(request, 'family/member_form.html', {'form': form})
@@ -31,7 +31,7 @@ def ModifyMember(request, member_id):
         form = MemberForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect('family:member', member_id=member_id)
+            return redirect('family:index')
     else:
         form = MemberForm(instance=instance)
     return render(request, 'family/member_form.html', {'form': form})
