@@ -27,11 +27,24 @@
   <div id="myDiagramDiv" style="width:100%; height:100%; background-color: #DAE4E4;"></div>
 </div>
 
-
-{% for relation in relations %}
-<div data-key="{{relation.individual_1_id.id}}" data-parent="{{relation.individual_2_id.id}}" data-name="{{relation.individual_1_id.last_name}}"  data-source="{{relation.individual_1_id.image_path}}"></div>
-{% endfor %}
-
+<section>
+  <div
+    class="js-data"
+    data-key="{{head_member.id}}"
+    data-name="{{head_member.last_name}}"
+    data-source="{{head_member.image_path}}"
+  ></div>
+  {% for relation in relations %}
+  <div
+    class="js-data"
+    data-key="{{relation.individual_1_id.id}}"
+    data-name="{{relation.individual_1_id.last_name}}"
+    data-source="{{relation.individual_1_id.image_path}}"
+    data-role="{{relation.relationship_type_code}}"
+    data-following="{{relation.individual_2_id.id}}"
+  ></div>
+  {% endfor %}
+</section>
 
 {% endblock %}
 
@@ -79,30 +92,29 @@
   );
 
   var model = $(go.TreeModel);
-
-
   
   window.onload = function() {
-    arr = [
 
-      
-      {key: "努尔哈赤", parent: "", name: "努尔哈赤", source: "/media/individual_3/htj.jpeg"}
-    ];
-    fetch('genealogy/').then(response => response.json()).then((json)=>{
-      console.log(json)
-      for (var i=0; i<json.length; i++) {
-        var obj = {};
-        obj.key = json[i].fields.individual_1_id.last_name
-        obj.parent = json[i].fields.individual_2_id.last_name
-        obj.name = json[i].fields.individual_1_id.last_name
-        obj.source = {{ MEDIA_URL }} + json[i].fields.individual_1_id.image_path
-        arr.push(obj)
+    var dom = document.querySelectorAll(".js-data")
+    console.log(dom)
+
+    var data = []
+    for(var i=0; i<dom.length; i++) {
+      data[i] = {}
+      data[i].key = dom[i].dataset.key
+      data[i].name = dom[i].dataset.name
+      data[i].source = "{{ MEDIA_URL }}" + dom[i].dataset.source
+      if(dom[i].dataset.role == "M") {
+        data[i].spouse = dom[i].dataset.following
+      }else if(dom[i].dataset.role == "C") {
+        data[i].parent = dom[i].dataset.following
       }
-      console.log(arr)
-      model.nodeDataArray = arr
-      myDiagram.model = model;
-    })            
-}
+    }
+    console.log(data)
+    model.nodeDataArray = data
+    myDiagram.model = model
+          
+  }
 
 </script>
 {% endblock %}

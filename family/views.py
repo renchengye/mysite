@@ -22,7 +22,7 @@ def CreateMember(request):
             return redirect('family:member', member_id=new_member.id)
     else:
         form = MemberForm()
-    return render(request, 'family/edit_member.html', {'form': form})
+    return render(request, 'family/member_form.html', {'form': form})
 
 @login_required
 def ModifyMember(request, member_id):
@@ -34,11 +34,7 @@ def ModifyMember(request, member_id):
             return redirect('family:member', member_id=member_id)
     else:
         form = MemberForm(instance=instance)
-    return render(request, 'family/edit_member.html', {'form': form})
-
-def MemberDetails(request, member_id):
-    member = Individual.objects.get(pk=member_id)
-    return render(request, 'family/member_details.html', {'member': member})
+    return render(request, 'family/member_form.html', {'form': form})
 
 @login_required
 def MyMemberList(request):
@@ -46,10 +42,16 @@ def MyMemberList(request):
     return render(request, 'family/member_list.html', {'members': members})
 
 def FamilyMemberList(request, family_id):
+    family = Family.objects.get(pk=family_id)
     head_member = Individual.objects.filter(family__id=family_id)
     other_members = Individual.objects.filter(individual_1__family_id=family_id)
     members = head_member | other_members
-    return render(request, 'family/member_list.html', {'members': members})
+    return render(request, 'family/member_list.html', {'members': members, 'family': family})
+
+def FamilyRelationship(request, family_id):
+    head_member = family = Family.objects.get(pk=family_id).head_of_family_individual_id
+    relations = Relationship.objects.filter(family_id=family_id)
+    return render(request, 'family/genealogy.html', {'head_member': head_member, 'relations': relations})
 
 # @login_required
 # def CreateFamily(request):
@@ -63,12 +65,3 @@ def FamilyList(request):
 def FamilyDetails(request, family_id):
     family = Family.objects.get(pk=family_id)
     return render(request, 'family/family_details.html', {'family': family})
-
-def FamilyRelationship(request, family_id):
-    relations = Relationship.objects.filter(family_id=family_id)
-    return render(request, 'family/relation.html', {'relations': relations})
-
-def Genealogy(request, family_id):
-    relations = Relationship.objects.filter(family_id=family_id)
-    json = serializers.serialize("json", relations, use_natural_foreign_keys=True)
-    return HttpResponse(json, content_type='application/json')
