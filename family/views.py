@@ -6,7 +6,7 @@ from django.core import serializers
 from django.http import HttpResponse
 # Create your views here.
 from .models import Individual, Family, Relationship
-from .forms import MemberForm
+from .forms import MemberForm, FamilyForm
 
 def Index(request):
     return render(request, 'family/index.html')
@@ -34,7 +34,7 @@ def ModifyMember(request, member_id):
             return redirect('family:index')
     else:
         form = MemberForm(instance=instance)
-    return render(request, 'family/member_form.html', {'form': form})
+    return render(request, 'family/member_form.html', {'form': form, 'member': instance})
 
 @login_required
 def MyMemberList(request):
@@ -53,10 +53,33 @@ def FamilyRelationship(request, family_id):
     relations = Relationship.objects.filter(family_id=family_id)
     return render(request, 'family/genealogy.html', {'head_member': head_member, 'relations': relations})
 
-# @login_required
-# def CreateFamily(request):
+@login_required
+def CreateFamily(request, member_id):
+    try:
+        family = Family.objects.get(head_of_family_individual_id=member_id)
+    except (KeyError, Family.DoesNotExist):
+        member = Individual.objects.get(pk=member_id)
+        if request.method == 'POST':
+            form = FamilyForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('family:index')
+        else:
+            form = FamilyForm()
+        return render(request, 'family/family_form.html', {'form': form, 'member': member})
+    else:
+        return redirect('family:family_details', family_id=family.id)
 
-# def JoinInFamily(request):
+@login_required
+def JoinInFamily(request, member_id):
+    if request.method == 'POST':
+        form = RelationshipForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('family:index')
+    else:
+        form = RelationshipForm()
+    return render(request, 'family/relationship_form.html', {'form': form})
 
 def FamilyList(request):
     families = Family.objects.all()[:5]
