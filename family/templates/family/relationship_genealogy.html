@@ -1,7 +1,7 @@
 {% extends "family/base.html" %}
 {% load static %}
 
-{% block title %}族谱{% endblock %}
+{% block title %}家族族谱{% endblock %}
 
 {% block style %}
 <style>
@@ -40,7 +40,7 @@
     data-key="{{relation.individual_1_id.id}}"
     data-name="{{relation.individual_1_id.last_name}}"
     data-source="{{relation.individual_1_id.image_path}}"
-    data-role="{{relation.relationship_type_code}}"
+    data-role="{{relation.relationship_type_code.relationship_type_code}}"
     data-following="{{relation.individual_2_id.id}}"
   ></div>
   {% endfor %}
@@ -62,7 +62,7 @@
       layout: $(
         go.TreeLayout,
         {
-          angle: 0,
+          angle: 90,
           layerSpacing: 20
         }
       )

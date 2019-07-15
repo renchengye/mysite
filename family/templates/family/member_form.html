@@ -9,7 +9,7 @@
       {% csrf_token %}
       <div class="weui-cells__title">编辑成员信息
         {% if member %}
-         | <a href="{% url 'family:create_family' member.id %}">加入家族</a>
+         | <a href="{% url 'family:choose_family' member.id %}">关联家族信息</a>
         {% endif %}
       </div>
       <div class="weui-cells weui-cells_form">        
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="weui-cell {% if form.place_of_birth.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd"><label class="weui-label">籍贯</label></div>
+          <div class="weui-cell__hd"><label class="weui-label">出生地点</label></div>
           <div class="weui-cell__bd">
             <input class="weui-input" type="text" placeholder="请输入籍贯" name="place_of_birth" value="{{form.place_of_birth.value|default:''}}">
           </div>
@@ -94,7 +94,9 @@
     </form>    
   </div>
 </div>
+{% endblock %}
 
+{% block script %}
 <script type="text/javascript">
   var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
     $uploaderInput = document.querySelector("#uploaderInput"),

@@ -1,84 +1,91 @@
 {% extends "family/base.html" %}
 
-{% block title %}编辑成员信息{% endblock %}
+{% block title %}编辑成员关系{% endblock %}
 
 {% block content %}
 <div class="weui-panel">
   <div class="weui-panel__bd">        
     <form  action="" method="post">
       {% csrf_token %}
-      <div class="weui-cells__title">编辑家族关系</div>
-      <div class="weui-cells weui-cells_form">        
-        <div class="weui-cell {% if form.family_name.errors %}weui-cell_warn{% endif %}">      
-          <div class="weui-cell__hd"><label class="weui-label">家族名称</label></div>
-          <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入家族名称" name="family_name" value="{{form.family_name.value|default:''}}">
-          </div>
-          <div class="weui-cell__ft">
-            <i class="weui-icon-warn"></i>
-          </div>
-        </div>
-        <div class="weui-cell {% if form.family_description.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd"><label class="weui-label">家族介绍</label></div>
-          <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入家族介绍" name="family_description" value="{{form.family_description.value|default:''}}">
-          </div>
-          <div class="weui-cell__ft">
-            <i class="weui-icon-warn"></i>
-          </div>
-        </div>
-        <div class="weui-cell weui-cell_select weui-cell_select-after">
+      <div class="weui-cells__title">编辑成员关系</div>
+      <div class="weui-cells weui-cells_form">
+        <div class="weui-cell weui-cell_select weui-cell_select-after {% if form.individual_1_id.errors %}weui-cell_warn{% endif %}">
           <div class="weui-cell__hd">
-            <label for="" class="weui-label">创始人</label>
+            <label for="" class="weui-label">成员姓名</label>
           </div>
           <div class="weui-cell__bd">
-            <select class="weui-select" name="head_of_family_individual_id">
+            <select class="weui-select" name="individual_1_id">
               <option value="{{member.id}}">{{member}}</option>
             </select>
           </div>
         </div>
-        <div class="weui-cell {% if form.family_date_from.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd"><label for="" class="weui-label">起始时间</label></div>
+        <div class="weui-cell weui-cell_select weui-cell_select-after {% if form.family_id.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd">
+            <label for="" class="weui-label">家族名称</label>
+          </div>
           <div class="weui-cell__bd">
-            <input class="weui-input" type="date" value="{{form.family_date_from.value|date:'Y-m-d'}}" name="family_date_from">
+            <select class="weui-select" name="family_id">
+              <option value="{{family.id}}">{{family}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="weui-cell weui-cell_select weui-cell_select-after {% if form.individual_2_id.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd">
+            <label for="" class="weui-label">目标人物</label>
+          </div>
+          <div class="weui-cell__bd">
+            <select class="weui-select" name="individual_2_id">
+              <option value="">请选择要关联的目标人物</option>
+              {% for member in members %}
+              <option value="{{member.id}}">{{member}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="weui-cell weui-cell_select weui-cell_select-after {% if form.individual_2_role_code.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd">
+            <label for="" class="weui-label">目标称谓</label>
+          </div>
+          <div class="weui-cell__bd">
+            <select class="weui-select" name="individual_2_role_code">
+              <option value="">请选择目标人物的称谓</option>
+              {% for role in roles %}
+              <option value="{{role.role_code}}">{{role}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>        
+        <div class="weui-cell {% if form.date_relationship_started.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd"><label for="" class="weui-label">发生日期</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="date" value="{{form.date_relationship_started.value|date:'Y-m-d'}}" name="date_relationship_started">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>        
+        <div class="weui-cell {% if form.date_relationship_ended.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd"><label for="" class="weui-label">终止日期</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="date" value="{{form.date_relationship_ended.value|date:'Y-m-d'}}" name="date_relationship_ended">
           </div>
           <div class="weui-cell__ft">
             <i class="weui-icon-warn"></i>
           </div>
         </div>
-        <div class="weui-cell {% if form.family_date_to.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd"><label for="" class="weui-label">结束时间</label></div>
+        <div class="weui-cell {% if form.relationship_place.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd"><label class="weui-label">发生地点</label></div>
           <div class="weui-cell__bd">
-            <input class="weui-input" type="date" value="{{form.family_date_to.value|date:'Y-m-d'}}" name="family_date_to">
+            <input class="weui-input" type="text" placeholder="请输入确定关系的地点" name="relationship_place" value="{{form.relationship_place.value|default:''}}">
           </div>
           <div class="weui-cell__ft">
             <i class="weui-icon-warn"></i>
           </div>
-        </div>      
+        </div>
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输入简介" rows="3" name="other_family_details">{{form.other_family_details.value|default:''}}</textarea>
+            <textarea class="weui-textarea" placeholder="备注" rows="3" name="other_relationship_details">{{form.other_relationship_details.value|default:''}}</textarea>
             <div class="weui-textarea-counter"><span>0</span>/200</div>
-          </div>
-        </div>
-        <div class="weui-cell">
-          <div class="weui-cell__bd">
-            <div class="weui-uploader">
-              <div class="weui-uploader__hd">
-                <p class="weui-uploader__title">请上传族徽</p>
-                <div class="weui-uploader__info"></div>
-              </div>
-              <div class="weui-uploader__bd">
-                <ul class="weui-uploader__files" id="uploaderFiles">
-                  {% if form.image_path.value %}
-                  <li class="weui-uploader__file" style="background-image:url({{ MEDIA_URL }}{{ form.image_path.value }})"></li>
-                  {% endif %}
-                </ul>
-                <div class="weui-uploader__input-box">
-                  <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" name="image_path">
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -89,23 +96,4 @@
     </form>    
   </div>
 </div>
-
-<script type="text/javascript">
-  var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
-    $uploaderInput = document.querySelector("#uploaderInput"),
-    $uploaderFiles = document.querySelector("#uploaderFiles");
-
-  $uploaderInput.onchange = function(e){
-    var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
-    for (var i = 0, len = files.length; i < len; ++i) {
-      var file = files[i];
-      if (url) {
-          src = url.createObjectURL(file);
-      } else {
-          src = e.target.result;
-      }
-      $uploaderFiles.innerHTML = tmpl.replace('#url#', src);
-    }
-  };
-</script>
 {% endblock %}

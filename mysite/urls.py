@@ -22,11 +22,11 @@ from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('books.urls')),
+    url(r'^books/', include('books.urls')),
     url(r'^polls/', include('polls.urls')),
     url(r'^accounts/login/$',  login),
     url(r'^accounts/logout/$', logout),
     url(r'^accounts/profile/$', views.profile),
     url(r'^accounts/register/$', views.register),
-    url(r'^family/', include('family.urls')),
+    url(r'', include('family.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

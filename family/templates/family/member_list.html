@@ -6,7 +6,9 @@
 <div class="weui-panel">
   <div class="weui-panel__hd">成员列表
     {% if family %}
-     | <a href="{% url 'family:relationship' family.id %}">族谱</a>
+     | <a href="{% url 'family:relationship' family.id %}">查看族谱</a>
+    {% else %}
+     | <a href="{% url 'family:create_member' %}">添加成员</a>
     {% endif %}
   </div>
   <div class="weui-panel__bd">

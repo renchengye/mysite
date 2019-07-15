@@ -1,0 +1,50 @@
+{% extends "family/base.html" %}
+
+{% block title %}关联家族信息{% endblock %}
+
+{% block content %}
+<div class="weui-panel">
+  <div class="weui-panel__bd">
+    <div class="weui-cells__title">关联家族信息</div>
+    <div class="weui-cells weui-cells_form">
+      <div class="weui-cell weui-cell_select weui-cell_select-after">
+        <div class="weui-cell__hd">
+          <label for="" class="weui-label">成员姓名</label>
+        </div>
+        <div class="weui-cell__bd">
+          <select class="weui-select" name="individual_1_id">
+            <option value="{{member.id}}">{{member}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="weui-cell weui-cell_select weui-cell_select-after">
+        <div class="weui-cell__hd">
+          <label for="" class="weui-label">家族名称</label>
+        </div>
+        <div class="weui-cell__bd">
+          <select class="weui-select" name="family_id">
+            <option value="">请选择要关联的家族</option>
+            {% for family in families %}
+            <option value="{{family.id}}">{{family}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="weui-btn-area">
+      <a href="javascript:nextPage()" class="weui-btn weui-btn_block weui-btn_primary">下一步</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  function nextPage() {
+    familyId = document.querySelector("select[name='family_id']").value
+    if(familyId) {
+      location.href =  "../joinFamily/" + familyId
+    }    
+  }
+</script>
+{% endblock %}

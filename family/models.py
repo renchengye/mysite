@@ -51,10 +51,10 @@ class Relationship_Type(models.Model):
         ('C', 'Consanguinity'),
         ('M', 'Marriage'),
     ]
-    relationship_type_code = models.IntegerField(primary_key=True)
-    relationship_type_description = models.CharField(max_length=10, choices=TYPE)
+    relationship_type_code = models.CharField(primary_key=True, max_length=10, choices=TYPE)
+    relationship_type_description = models.CharField(max_length=50)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.relationship_type_description
 
 class Role(models.Model):
@@ -66,10 +66,10 @@ class Role(models.Model):
         ('H', 'Husband'),
         ('W', 'Wife'),
     ]
-    role_code = models.IntegerField(primary_key=True)
-    role_description = models.CharField(max_length=10, choices=ROLES)
+    role_code = models.CharField(primary_key=True, max_length=10, choices=ROLES)
+    role_description = models.CharField(max_length=50)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.role_description
 
 class Relationship(models.Model):

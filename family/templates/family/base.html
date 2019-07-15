@@ -29,7 +29,7 @@
 </head>
 <body>  
   <header class="weui-flex">
-    <a href="/family" class="weui-flex__item"><i class="logo"></i></a>
+    <a href="{% url 'family:index' %}" class="weui-flex__item"><i class="logo"></i></a>
     {% if user.is_authenticated %}
     <a href="/accounts/profile" class="weui-btn weui-btn_mini weui-btn_plain-primary">{{user.username}}</a>    
     {% else %}
