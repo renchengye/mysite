@@ -10,11 +10,11 @@ class MemberForm(ModelForm):
 class FamilyForm(ModelForm):
     class Meta:
         model = Family
-        fields = ['head_of_family_individual_id', 'family_name', 'family_description', 'family_date_from', 'family_date_to','other_family_details', 'image_path']
+        fields = ['family_name', 'family_description', 'family_date_from', 'family_date_to','other_family_details', 'image_path']
         localized_fields = ('family_date_from', 'family_date_to')
 
 class RelationshipForm(ModelForm):
     class Meta:
         model = Relationship
-        fields = ['family_id', 'individual_1_id', 'individual_2_id', 'individual_2_role_code', 'date_relationship_started', 'date_relationship_ended', 'relationship_place', 'other_relationship_details']
+        fields = ['individual_2_id', 'individual_2_role_code', 'date_relationship_started', 'date_relationship_ended', 'relationship_place', 'other_relationship_details']
         localized_fields = ('date_relationship_started', 'date_relationship_ended')

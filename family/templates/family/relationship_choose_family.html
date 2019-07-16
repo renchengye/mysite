@@ -1,20 +1,18 @@
 {% extends "family/base.html" %}
 
-{% block title %}关联家族信息{% endblock %}
+{% block title %}选择家族{% endblock %}
 
 {% block content %}
 <div class="weui-panel">
   <div class="weui-panel__bd">
-    <div class="weui-cells__title">关联家族信息</div>
+    <div class="weui-cells__title">选择家族
+       | <a href="{% url 'family:create_family' member.id %}">创建家族</a>
+    </div>
     <div class="weui-cells weui-cells_form">
-      <div class="weui-cell weui-cell_select weui-cell_select-after">
-        <div class="weui-cell__hd">
-          <label for="" class="weui-label">成员姓名</label>
-        </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">成员姓名</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="individual_1_id">
-            <option value="{{member.id}}">{{member}}</option>
-          </select>
+          <input class="weui-input" type="text" value="{{member}}" disabled>
         </div>
       </div>
       <div class="weui-cell weui-cell_select weui-cell_select-after">

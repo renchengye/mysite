@@ -1,44 +1,44 @@
 {% extends "family/base.html" %}
 
-{% block title %}编辑成员信息{% endblock %}
+{% block title %}编辑家族信息{% endblock %}
 
 {% block content %}
 <div class="weui-panel">
   <div class="weui-panel__bd">        
     <form  action="" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      <div class="weui-cells__title">编辑家族信息</div>
-      <div class="weui-cells weui-cells_form">        
+      <div class="weui-cells__title">编辑家族信息
+      {% if family %}
+        | <a href="{% url 'family:member_list' family.id %}">家族成员</a>
+      {% endif %}
+      </div>
+      <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+          <div class="weui-cell__hd"><label class="weui-label">创始人</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" value="{{member}}" disabled>
+          </div>
+        </div>
         <div class="weui-cell {% if form.family_name.errors %}weui-cell_warn{% endif %}">      
           <div class="weui-cell__hd"><label class="weui-label">家族名称</label></div>
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入家族名称" name="family_name" value="{{form.family_name.value|default:''}}">
+            <input class="weui-input" type="text" placeholder="请输入家族名称(必填)" name="family_name" value="{{form.family_name.value|default:''}}">
           </div>
           <div class="weui-cell__ft">
             <i class="weui-icon-warn"></i>
           </div>
         </div>
-        <div class="weui-cell {% if form.family_description.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd"><label class="weui-label">家族介绍</label></div>
+        <div class="weui-cell">
+          <div class="weui-cell__hd"><label class="weui-label">家族族语</label></div>
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入家族介绍" name="family_description" value="{{form.family_description.value|default:''}}">
+            <input class="weui-input" type="text" placeholder="请输入家族族语" name="family_description" value="{{form.family_description.value|default:''}}">
           </div>
           <div class="weui-cell__ft">
             <i class="weui-icon-warn"></i>
           </div>
         </div>
-        <div class="weui-cell weui-cell_select weui-cell_select-after">
-          <div class="weui-cell__hd">
-            <label for="" class="weui-label">创始人</label>
-          </div>
-          <div class="weui-cell__bd">
-            <select class="weui-select" name="head_of_family_individual_id">
-              <option value="{{member.id}}">{{member}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="weui-cell {% if form.family_date_from.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd"><label for="" class="weui-label">起始时间</label></div>
+        <div class="weui-cell">
+          <div class="weui-cell__hd"><label for="" class="weui-label">创建日期</label></div>
           <div class="weui-cell__bd">
             <input class="weui-input" type="date" value="{{form.family_date_from.value|date:'Y-m-d'}}" name="family_date_from">
           </div>
@@ -46,8 +46,8 @@
             <i class="weui-icon-warn"></i>
           </div>
         </div>
-        <div class="weui-cell {% if form.family_date_to.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd"><label for="" class="weui-label">结束时间</label></div>
+        <div class="weui-cell">
+          <div class="weui-cell__hd"><label for="" class="weui-label">结束日期</label></div>
           <div class="weui-cell__bd">
             <input class="weui-input" type="date" value="{{form.family_date_to.value|date:'Y-m-d'}}" name="family_date_to">
           </div>
@@ -57,7 +57,7 @@
         </div>      
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输入简介" rows="3" name="other_family_details">{{form.other_family_details.value|default:''}}</textarea>
+            <textarea class="weui-textarea" placeholder="详情介绍" rows="3" name="other_family_details">{{form.other_family_details.value|default:''}}</textarea>
             <div class="weui-textarea-counter"><span>0</span>/200</div>
           </div>
         </div>

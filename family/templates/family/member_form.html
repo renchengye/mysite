@@ -16,7 +16,7 @@
         <div class="weui-cell {% if form.first_name.errors %}weui-cell_warn{% endif %}">
           <div class="weui-cell__hd"><label class="weui-label">姓氏</label></div>
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入姓氏" name="first_name" value="{{form.first_name.value|default:''}}">
+            <input class="weui-input" type="text" placeholder="请输入姓氏(必填)" name="first_name" value="{{form.first_name.value|default:''}}">
           </div>
           <div class="weui-cell__ft">
             <i class="weui-icon-warn"></i>
@@ -25,7 +25,7 @@
         <div class="weui-cell {% if form.last_name.errors %}weui-cell_warn{% endif %}">
           <div class="weui-cell__hd"><label class="weui-label">名字</label></div>
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入名字" name="last_name" value="{{form.last_name.value|default:''}}">
+            <input class="weui-input" type="text" placeholder="请输入名字(必填)" name="last_name" value="{{form.last_name.value|default:''}}">
           </div>
           <div class="weui-cell__ft">
             <i class="weui-icon-warn"></i>
@@ -41,16 +41,7 @@
               <option value="F" {% if form.gender.value == "F" %}selected{% endif %}>女</option>
             </select>
           </div>
-        </div>
-        <div class="weui-cell {% if form.place_of_birth.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd"><label class="weui-label">出生地点</label></div>
-          <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入籍贯" name="place_of_birth" value="{{form.place_of_birth.value|default:''}}">
-          </div>
-          <div class="weui-cell__ft">
-            <i class="weui-icon-warn"></i>
-          </div>
-        </div>
+        </div>        
         <div class="weui-cell {% if form.date_of_birth.errors %}weui-cell_warn{% endif %}">
           <div class="weui-cell__hd"><label for="" class="weui-label">出生日期</label></div>
           <div class="weui-cell__bd">
@@ -59,10 +50,19 @@
           <div class="weui-cell__ft">
             <i class="weui-icon-warn"></i>
           </div>
-        </div>      
+        </div>
+        <div class="weui-cell {% if form.place_of_birth.errors %}weui-cell_warn{% endif %}">
+          <div class="weui-cell__hd"><label class="weui-label">出生地点</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入出生地(必填)" name="place_of_birth" value="{{form.place_of_birth.value|default:''}}">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输入简介" rows="3" name="other_individual_details">{{form.other_individual_details.value|default:''}}</textarea>
+            <textarea class="weui-textarea" placeholder="人物介绍" rows="3" name="other_individual_details">{{form.other_individual_details.value|default:''}}</textarea>
             <div class="weui-textarea-counter"><span>0</span>/200</div>
           </div>
         </div>

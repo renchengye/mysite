@@ -42,6 +42,7 @@ class Family(models.Model):
     family_date_to = models.DateField(null=True, blank=True)
     other_family_details = models.TextField(null=True, blank=True)
     image_path = models.FileField(upload_to=family_directory_path, null=True, blank=True)
+    is_public = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.family_name

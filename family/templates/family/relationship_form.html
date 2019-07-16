@@ -9,24 +9,16 @@
       {% csrf_token %}
       <div class="weui-cells__title">编辑成员关系</div>
       <div class="weui-cells weui-cells_form">
-        <div class="weui-cell weui-cell_select weui-cell_select-after {% if form.individual_1_id.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd">
-            <label for="" class="weui-label">成员姓名</label>
-          </div>
+        <div class="weui-cell">
+          <div class="weui-cell__hd"><label class="weui-label">成员姓名</label></div>
           <div class="weui-cell__bd">
-            <select class="weui-select" name="individual_1_id">
-              <option value="{{member.id}}">{{member}}</option>
-            </select>
+            <input class="weui-input" type="text" value="{{member}}" disabled>
           </div>
         </div>
-        <div class="weui-cell weui-cell_select weui-cell_select-after {% if form.family_id.errors %}weui-cell_warn{% endif %}">
-          <div class="weui-cell__hd">
-            <label for="" class="weui-label">家族名称</label>
-          </div>
+        <div class="weui-cell">
+          <div class="weui-cell__hd"><label class="weui-label">家族名称</label></div>
           <div class="weui-cell__bd">
-            <select class="weui-select" name="family_id">
-              <option value="{{family.id}}">{{family}}</option>
-            </select>
+            <input class="weui-input" type="text" value="{{family}}" disabled>
           </div>
         </div>
         <div class="weui-cell weui-cell_select weui-cell_select-after {% if form.individual_2_id.errors %}weui-cell_warn{% endif %}">

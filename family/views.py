@@ -2,12 +2,11 @@
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.core import serializers
-from django.http import HttpResponse
-from django.db.models import Q
 # Create your views here.
+from django.db.models import Q
 from .models import Individual, Family, Relationship, Role, Relationship_Type
 from .forms import MemberForm, FamilyForm, RelationshipForm
+
 
 def Index(request):
     return render(request, 'family/index.html')
@@ -40,7 +39,7 @@ def ModifyMember(request, member_id):
 
 @login_required
 def MyMemberList(request):
-    members = Individual.objects.filter(created_by=request.user)
+    members = Individual.objects.filter(created_by=request.user).exclude(family__isnull=False).exclude(individual_1__isnull=False)
     return render(request, 'family/member_list.html', {'members': members})
 
 def FamilyMemberList(request, family_id):
@@ -60,8 +59,10 @@ def CreateFamily(request, member_id):
         if request.method == 'POST':
             form = FamilyForm(request.POST, request.FILES)
             if form.is_valid():
-                form.save()
-                return redirect('family:index')
+                instance = form.save(commit=False)
+                instance.head_of_family_individual_id = member
+                instance.save()
+                return redirect('family:family_list')
         else:
             form = FamilyForm()
         return render(request, 'family/family_form.html', {'form': form, 'member': member})
@@ -69,11 +70,20 @@ def CreateFamily(request, member_id):
         return redirect('family:family_details', family_id=family.id)
 
 def FamilyDetails(request, family_id):
-    family = Family.objects.get(pk=family_id)
-    return render(request, 'family/family_details.html', {'family': family})
+    instance = Family.objects.get(pk=family_id)
+    member = instance.head_of_family_individual_id
+    if request.method == 'POST':
+        form = FamilyForm(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('family:family_list')
+    else:
+        form = FamilyForm(instance=instance)
+    return render(request, 'family/family_form.html', {'form': form, 'member': member, 'family': instance})
 
+@login_required
 def FamilyList(request):
-    families = Family.objects.all()[:5]
+    families = Family.objects.filter(head_of_family_individual_id__created_by=request.user)
     return render(request, 'family/family_list.html', {'families': families})
 
 # Relationship
@@ -87,6 +97,7 @@ def ChooseFamily(request, member_id):
 def JoinInFamily(request, member_id, family_id):
     member = Individual.objects.get(pk=member_id)
     family = Family.objects.get(pk=family_id)
+    
     head_member = Individual.objects.filter(family__id=family_id)
     other_members = Individual.objects.filter(individual_1__family_id=family_id, individual_1__relationship_type_code='C')
     members = head_member | other_members
@@ -97,13 +108,15 @@ def JoinInFamily(request, member_id, family_id):
         form = RelationshipForm(request.POST)
         if form.is_valid():
             relation = form.save(commit=False)
+            relation.family_id = family
+            relation.individual_1_id = member
+
             role2 = relation.individual_2_role_code.role_code
 
             if role2 == 'F' or role2 == 'M':
                 type_code = 'C'
             else:
                 type_code = 'M'
-
             if type_code == 'C':
                 if member.gender == 'M':
                     role_code = 'S'
