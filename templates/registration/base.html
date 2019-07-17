@@ -36,7 +36,10 @@
     }
   </style>
 </head>
-<body>  
+<body>
+  <header class="weui-flex">
+    <a href="{% url 'family:index' %}" class="weui-flex__item"><i class="logo"></i></a>
+  </header>
   {% block content %}{% endblock %}
   {% block footer %}{% endblock %}
 </body>

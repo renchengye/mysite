@@ -32,6 +32,7 @@
     class="js-data"
     data-key="{{head_member.id}}"
     data-name="{{head_member.last_name}}"
+    data-gender="{{head_member.gender}}"
     data-source="{{head_member.image_path}}"
   ></div>
   {% for relation in relations %}
@@ -39,82 +40,64 @@
     class="js-data"
     data-key="{{relation.individual_1_id.id}}"
     data-name="{{relation.individual_1_id.last_name}}"
+    data-gender="{{relation.individual_1_id.gender}}"
     data-source="{{relation.individual_1_id.image_path}}"
     data-role="{{relation.relationship_type_code.relationship_type_code}}"
     data-following="{{relation.individual_2_id.id}}"
   ></div>
   {% endfor %}
 </section>
-
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'libs/js/go-debug.js' %}"></script>
+<script src="{% static 'libs/js/go.js' %}"></script>
+<script src="{% static 'family/js/genealogy.js' %}"></script>
 
 <script>
-  var $ = go.GraphObject.make;
-  
-  var myDiagram = $(go.Diagram,
-    "myDiagramDiv",
-    {
-      initialAutoScale: go.Diagram.Uniform,
-      "undoManager.isEnabled": true,
-      layout: $(
-        go.TreeLayout,
-        {
-          angle: 90,
-          layerSpacing: 20
-        }
-      )
+window.onload = function(){
+  // n: name, s: sex, m: mother, f: father, ux: wife, vir: husband
+  var dom = document.querySelectorAll(".js-data")
+  var data = []
+  var obj = {}
+
+  for(var i=0; i<dom.length; i++) {    
+    var key = dom[i].dataset.key
+    var following = dom[i].dataset.following
+
+    data[i] = {}
+    data[i].key = key
+    data[i].n = dom[i].dataset.name
+    data[i].s = dom[i].dataset.gender
+    data[i].source = "{{ MEDIA_URL }}" + dom[i].dataset.source
+
+    if(dom[i].dataset.role == "M") {
+      if(dom[i].dataset.gender == "M") {
+        data[i].ux = following
+        obj[following] = {}
+        obj[following].vir = key
+      }else if(dom[i].dataset.gender == "F") {
+        data[i].vir = following
+        obj[following] = {}
+        obj[following].ux = key
+      }      
+    }else if(dom[i].dataset.role == "C") {
+      data[i].parent = following
     }
-  );
-
-  myDiagram.nodeTemplate = $(go.Node,
-    "Vertical",
-    { background: "#44CCFF" },
-    $(go.Picture,
-      { margin: 6, width: 64, height: 64, background: "red" },
-      new go.Binding("source")
-    ),
-    $(go.TextBlock,
-      "Default Text",
-      { margin: 6, width: 64, stroke: "white", font: "bold 16px sans-serif", wrap: go.TextBlock.None },
-      new go.Binding("text", "name")
-    ),
-    // $("TreeExpanderButton")
-  );
-
-  myDiagram.linkTemplate = $(go.Link,
-    { routing: go.Link.Orthogonal, corner: 5 },
-    $(go.Shape,
-      { strokeWidth: 3, stroke: "#555" }
-    )
-  );
-
-  var model = $(go.TreeModel);
-  
-  window.onload = function() {
-
-    var dom = document.querySelectorAll(".js-data")
-    console.log(dom)
-
-    var data = []
-    for(var i=0; i<dom.length; i++) {
-      data[i] = {}
-      data[i].key = dom[i].dataset.key
-      data[i].name = dom[i].dataset.name
-      data[i].source = "{{ MEDIA_URL }}" + dom[i].dataset.source
-      if(dom[i].dataset.role == "M") {
-        data[i].spouse = dom[i].dataset.following
-      }else if(dom[i].dataset.role == "C") {
-        data[i].parent = dom[i].dataset.following
-      }
-    }
-    console.log(data)
-    model.nodeDataArray = data
-    myDiagram.model = model
-          
   }
 
+  for(var j=0; j<data.length; j++) {
+    if(data[j].parent) {
+      if(obj[data[j].parent] && obj[data[j].parent].ux) {
+        data[j].f = data[j].parent
+        data[j].m = obj[data[j].parent].ux
+      }else if(obj[data[j].parent] && obj[data[j].parent].vir) {
+        data[j].m = data[j].parent
+        data[j].f = obj[data[j].parent].vir
+      }
+    }
+  }
+   
+  init(data)
+}
 </script>
 {% endblock %}
