@@ -4,32 +4,31 @@ function init(data, nodeId) {
   myDiagram = $(go.Diagram, "myDiagramDiv", {
     initialAutoScale: go.Diagram.Uniform,
     "undoManager.isEnabled": true,
-    layout:
-      $(GenogramLayout, { direction: 90, layerSpacing: 30, columnSpacing: 10 })
+    layout: $(GenogramLayout, { direction: 90, layerSpacing: 30, columnSpacing: 10 })
   });
 
   myDiagram.nodeTemplateMap.add("M", $(go.Node, "Vertical",
     $(go.Picture,
-      { width: 64, height: 64 },
+      { width: 64, height: 64, portId: "" },
       new go.Binding("source")
     ),
     $(go.TextBlock,
-      { textAlign: "center", maxSize: new go.Size(80, NaN) },
+      { textAlign: "center", maxSize: new go.Size(80, NaN), margin: 4 },
       new go.Binding("text", "n")
     )
   ));
 
-  myDiagram.nodeTemplateMap.add("F", $(go.Node, "Vertical",         
-    $(go.Panel, "Spot",
-      { isClipping: true  },
-      $(go.Shape, "Circle", { width: 64, strokeWidth: 0 } ),
+  myDiagram.nodeTemplateMap.add("F", $(go.Node, "Vertical",
+    $(go.Panel,
+      { isClipping: true },
+      $(go.Shape, "Circle", { width: 64, strokeWidth: 0 }),
       $(go.Picture,
-        { width: 64, height: 64 },
+        { width: 64, height: 64, portId: "" },
         new go.Binding("source")
       )
     ),
     $(go.TextBlock,
-      { textAlign: "center", maxSize: new go.Size(80, NaN) },
+      { textAlign: "center", maxSize: new go.Size(80, NaN), margin: 4 },
       new go.Binding("text", "n")
     )
   ));
@@ -52,7 +51,8 @@ function init(data, nodeId) {
     $(go.Link,
       { selectable: false },
       $(go.Shape, { strokeWidth: 2, stroke: "blue" })
-    ));
+    )
+  );
   
   setupDiagram(myDiagram, data, nodeId);
 }
